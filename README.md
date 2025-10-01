@@ -1,7 +1,5 @@
 # fastapi-structured-logging
 
-fastapi-structured-logging
-
 fastapi-structured-logging is a lightweight Python module that provides structured logging utilities and a configurable FastAPI access logging middleware. It configures `structlog` for JSON or console output, enriches log events with OpenTelemetry trace and span identifiers, and exposes an `AccessLogMiddleware` that can record request method, path, query parameters, client IP, user agent, status codes, processing time and more.
 
 The middleware supports filtering, trusted-proxy handling, custom fields and messages, and integrates cleanly with existing Python logging to produce consistent, machine-readable access logs for observability and tracing.
