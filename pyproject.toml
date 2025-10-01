@@ -8,10 +8,14 @@ dynamic = ["version"]
 requires-python = ">=3.9"
 authors = [{ name = "Damien Degois", email = "damien@degois.info" }]
 description = "fastapi structured logging middleware (accesslog, opentelemetry)"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICEN[CS]E*"]
 dependencies = ["structlog", "fastapi", "orjson"]
 classifiers = [
   "Environment :: Web Environment",
   "Framework :: FastAPI",
+  "License :: OSI Approved :: Apache Software License",
   "Topic :: Internet",
   "Topic :: Internet :: WWW/HTTP",
   "Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware",
