@@ -1,0 +1,7 @@
+-r ../requirements.txt
+uvicorn[standard]
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-distro
+opentelemetry-exporter-otlp
+..

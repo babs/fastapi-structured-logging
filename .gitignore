@@ -1,0 +1,11 @@
+dist
+build
+fastapi_structured_logging.egg-info
+venv
+__pycache__
+.mypy_cache/
+*.pyc
+.vscode
+.coverage
+cov.xml
+VERSION

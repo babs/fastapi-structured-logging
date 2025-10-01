@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fastapi-structured-logging"
+dynamic = ["version"]
+requires-python = ">=3.9"
+authors = [{ name = "Damien Degois", email = "damien@degois.info" }]
+description = "fastapi structured logging middleware (accesslog, opentelemetry)"
+dependencies = ["structlog", "fastapi", "orjson"]
+classifiers = [
+  "Environment :: Web Environment",
+  "Framework :: FastAPI",
+  "Topic :: Internet",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware",
+  "Topic :: Software Development",
+  "Topic :: System :: Monitoring",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Programming Language :: Python :: 3 :: Only",
+]
+[project.optional-dependencies]
+otlp = ["opentelemetry-api", "opentelemetry-sdk"]
+tests = ["fastapi-structured-logging[otlp]", "pytest"]
+
+[project.urls]
+homepage = "https://github.com/babs/fastapi-structured-logging"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
+
+[tool.pytest.ini_options]
+addopts = "--cov=fastapi-structured-logging"
+testpaths = ["tests"]
+filterwarnings = ["ignore:Call to deprecated method __init__."]
+
+
+[tool.mypy]
+mypy_path = "src"
+check_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+no_implicit_reexport = true

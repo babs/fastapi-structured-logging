@@ -1,0 +1,46 @@
+name: "Build and release"
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+
+      - name: Install requirements
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements-release.txt
+
+      - name: Build
+        run: |
+          VERSION=${GITHUB_REF_NAME##v}
+          echo VERSION=$VERSION
+          echo $VERSION > VERSION
+          python -m build -s -w
+
+      - name: Publish package distributions to ${{ vars.PYPI_REPOSITORY }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: ${{ vars.PYPI_REPOSITORY }}
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag}" \
+              --generate-notes
