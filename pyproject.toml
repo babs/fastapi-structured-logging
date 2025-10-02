@@ -15,7 +15,6 @@ dependencies = ["structlog", "fastapi", "orjson"]
 classifiers = [
   "Environment :: Web Environment",
   "Framework :: FastAPI",
-  "License :: OSI Approved :: Apache Software License",
   "Topic :: Internet",
   "Topic :: Internet :: WWW/HTTP",
   "Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware",
