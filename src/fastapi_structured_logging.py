@@ -34,7 +34,7 @@ get_logger = structlog.get_logger
 
 
 def _add_trace_info(_, __, event_dict: dict[str, Any]) -> dict[str, Any]:
-    if OTEL_AVAILABLE or True:
+    if OTEL_AVAILABLE:
         span = trace.get_current_span()
 
         # Initialize tracing if no valid span context exists
