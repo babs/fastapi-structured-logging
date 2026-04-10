@@ -55,7 +55,7 @@ app.add_middleware(fastapi_structured_logging.AccessLogMiddleware)
 Run the FastAPI application with OpenTelemetry instrumentation:
 
 ```bash
-uv run opentelemetry-instrument uvicorn example1:app
+uv run opentelemetry-instrument uvicorn example1:app --no-access-log
 ```
 
 The server will start on `http://0.0.0.0:8000`.
