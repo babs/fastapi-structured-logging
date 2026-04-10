@@ -109,10 +109,12 @@ def setup_logging(json_logs: Optional[bool] = None, log_level: str = "INFO"):
     root_logger = logging.getLogger()
     root_logger.addHandler(handler)
     root_logger.setLevel(log_level.upper())
-    # Adjust Uvicorn loggers to propagate to root logger properly.
+    # Clear uvicorn's default handlers (plain-text) and let errors propagate
+    # to the root JSON handler. Access stays disabled — AccessLogMiddleware
+    # handles it via structured logging instead.
     for log_name in ["uvicorn", "uvicorn.error"]:
         logging.getLogger(log_name).handlers.clear()
-        logging.getLogger(log_name).propagate = False
+        logging.getLogger(log_name).propagate = True
     logging.getLogger("uvicorn.access").handlers.clear()
     logging.getLogger("uvicorn.access").propagate = False
 
@@ -176,7 +178,6 @@ class AccessLogMiddleware(BaseHTTPMiddleware):
                 ipaddress.ip_network(cidr) for cidr in self.config.trusted_proxy
             ]
         except ValueError:
-            self._cache_trusted_proxy_networks = []
             self._cache_trusted_proxy_networks = []
 
     def __is_trusted_proxy(self, ip: str) -> bool:

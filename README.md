@@ -22,6 +22,8 @@ app.add_middleware(fastapi_structured_logging.AccessLogMiddleware)
 
 ```
 
+> **Important:** When using `uvicorn.run()`, pass `log_config=None` and `access_log=False` to prevent uvicorn from re-adding its default plain-text handlers over the structured logging setup. When using the uvicorn CLI, this is not needed — `setup_logging()` runs during app import, after uvicorn's logging init. Pass `--no-access-log` to let the middleware handle access logs.
+
 ## Configuration Options
 
 The library provides extensive configuration options to customize logging and access logging behavior.
