@@ -67,7 +67,20 @@ def json_serializer(obj: Any, default=None) -> str:
     return orjson.dumps(obj, default=default).decode("utf-8")
 
 
-def setup_logging(json_logs: Optional[bool] = None, log_level: str = "INFO"):
+def setup_logging(
+    json_logs: Optional[bool] = None, log_level: str = "INFO", utc: bool = True
+):
+    """Configure structlog-based logging for FastAPI applications.
+
+    Args:
+    
+        log_level: Logging level string (e.g., "DEBUG", "INFO", "WARNING", "ERROR").
+        utc: Whether timestamps should use UTC time or local system time.
+            When ``True`` (default), all timestamps are emitted in UTC
+            (ISO-8601 with a trailing ``Z``).  When ``False``, timestamps
+            use the local timezone of the running process (honours the
+            environment variable ``TZ`` / container timezone).
+    """
     if json_logs is None:
         json_logs = not sys.stdout.isatty()
 
@@ -79,7 +92,7 @@ def setup_logging(json_logs: Optional[bool] = None, log_level: str = "INFO"):
         structlog.stdlib.PositionalArgumentsFormatter(),
         structlog.stdlib.ExtraAdder(),
         _drop_color_message_key,
-        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.TimeStamper(fmt="iso", utc=utc),
         structlog.processors.StackInfoRenderer(),
     ]
     if json_logs:
